@@ -18,14 +18,32 @@ class App extends React.Component {
       console.log("Hi!", res.data);
       this.setState({
         user: res.data,
+        userSearch: "",
       });
     });
   }
 
-  // src={props.avatar_url} />
-  // <UserName>{props.name}</UserName>
-  // <Followers>{props.followers}</Followers>
-  // <Following>{props.following}</Following>
+  componentDidUpdate() {
+    console.log("component updated!");
+  }
+
+  handleChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  searchUser = (e) => {
+    e.preventDefault();
+    axios
+      .get(`https://api.github.com/users/${this.state.userSearch}`)
+      .then((res) => {
+        console.log("I am the searched user", res.data);
+        this.setState({
+          user: res.data,
+        });
+      });
+  };
 
   render() {
     return (
@@ -33,6 +51,15 @@ class App extends React.Component {
         <header className="App-header">
           <h6>GitHub User Cards</h6>
         </header>
+        <div>
+          <input
+            type="text"
+            value={this.state.userSearch}
+            name="userSearch"
+            onChange={this.handleChange}
+          />
+          <button onClick={this.searchUser}>Search</button>
+        </div>
         <div>
           {/* <Card
             avatar_url={this.state.user.avatar_url}
