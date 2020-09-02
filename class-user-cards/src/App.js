@@ -8,6 +8,7 @@ class App extends React.Component {
     super();
     this.state = {
       user: [],
+      followers: [],
     };
   }
 
@@ -45,6 +46,22 @@ class App extends React.Component {
       });
   };
 
+  getFollowers = (e) => {
+    e.preventDefault();
+    console.log("getfollowers clicked!");
+    axios
+      .get(`https://api.github.com/users/isaac-gorman/followers`)
+      .then((res) => {
+        console.log("I am followers", res.data);
+        this.setState({
+          followers: res.data,
+        });
+      })
+      .catch((err) => {
+        console.log("I am error", err);
+      });
+  };
+
   render() {
     return (
       <div className="App">
@@ -68,6 +85,18 @@ class App extends React.Component {
             following={this.state.user.following}
           /> */}
           <Card state={this.state.user} />
+          <button onClick={this.getFollowers}>View Followers</button>
+          {this.state.followers.length === 0 ? (
+            <p>Look at the follwers</p>
+          ) : (
+            this.state.followers.map((item) => {
+              return (
+                <div>
+                  <h5>{item.login}</h5>
+                </div>
+              );
+            })
+          )}
         </div>
       </div>
     );

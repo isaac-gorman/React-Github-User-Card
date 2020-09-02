@@ -35,6 +35,7 @@ const Following = styled.h6`
   margin-bottom: 0px;
 `;
 
+const ViewFollowers = styled.button``;
 // I want to set it to just the state so all I have to do is just pass the state
 
 function Card(props) {
