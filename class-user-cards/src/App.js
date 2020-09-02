@@ -9,6 +9,7 @@ class App extends React.Component {
     this.state = {
       user: [],
       followers: [],
+      userSearch: "isaac-gorman",
     };
   }
 
@@ -19,7 +20,6 @@ class App extends React.Component {
       console.log("Hi!", res.data);
       this.setState({
         user: res.data,
-        userSearch: "",
       });
     });
   }
@@ -50,7 +50,7 @@ class App extends React.Component {
     e.preventDefault();
     console.log("getfollowers clicked!");
     axios
-      .get(`https://api.github.com/users/isaac-gorman/followers`)
+      .get(`https://api.github.com/users/${this.state.userSearch}/followers`)
       .then((res) => {
         console.log("I am followers", res.data);
         this.setState({
